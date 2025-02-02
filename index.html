@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星空应用商店</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --star-color: rgba(255,255,255,0.8);
+            --space-gradient: linear-gradient(45deg, #0a0a2e, #1a1a4f, #2a2a6f);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui;
+            background: var(--space-gradient);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: titleFloat 3s ease-in-out infinite;
+        }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .app-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0,0,255,0.2);
+        }
+
+        .app-icon {
+            font-size: 2.5rem;
+            color: #4e8cff;
+            margin-bottom: 1rem;
+        }
+
+        .app-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #4e8cff, #6c5ce7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .app-description {
+            color: #ccd6f6;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(45deg, #4e8cff, #6c5ce7);
+            color: white;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(78,140,255,0.4);
+        }
+
+        @keyframes titleFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* 星空背景动画 */
+        .stars {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            background: var(--star-color);
+            border-radius: 50%;
+            animation: twinkle var(--duration) ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    
+    <div class="container">
+        <header class="header">
+            <h1>✨ 星空应用商店 ✨</h1>
+        </header>
+
+        <div class="apps-grid">
+            <!-- 星空AI -->
+            <div class="app-card">
+                <i class="app-icon fas fa-robot"></i>
+                <h2 class="app-title">星空AI助理</h2>
+                <p class="app-description">基于阿里云API再次开发的智能助手，支持自然语言处理、超长文字生成和自动化任务处理，为您提供全天候智能服务。</p>
+                <div class="btn-group">
+                    <a href="#" class="btn" onclick="downloadApp('ai')">立即下载</a>
+                    <a href="https://npqvq.icu/ai" class="btn" target="_blank">立即使用</a>
+                </div>
+            </div>
+
+            <!-- 星空搜索引擎 -->
+            <div class="app-card">
+                <i class="app-icon fas fa-search"></i>
+                <h2 class="app-title">星空搜索</h2>
+                <p class="app-description">下一代PC智能搜索索引，支持语义搜索、多模态查询和个性化推荐，快速精准获取全网信息。</p>
+                <div class="btn-group">
+                    <a href="#" class="btn" onclick="downloadApp('search')">立即下载</a>
+                    <a href="https://xdupc.lingxmj.top" class="btn" target="_blank">在线访问</a>
+                </div>
+            </div>
+
+            <!-- 星空论坛 -->
+            <div class="app-card">
+                <i class="app-icon fas fa-users"></i>
+                <h2 class="app-title">星空社区</h2>
+                <p class="app-description">谈天谈地的交流平台，涵盖全方位话题的优质社区。</p>
+                <div class="btn-group">
+                    <a href="#" class="btn" onclick="downloadApp('forum')">立即下载</a>
+                    <a href="https://hinp.us.kg" class="btn" target="_blank">在线访问</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 生成星空背景
+        function createStars() {
+            const container = document.getElementById('stars');
+            for (let i = 0; i < 200; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.width = star.style.height = `${Math.random() * 3}px`;
+                star.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                container.appendChild(star);
+            }
+        }
+
+        // 下载处理函数
+        function downloadApp(type) {
+            const urls = {
+                ai: 'https://www.123865.com/s/JfMmjv-0v2Zv',
+                search: 'https://www.123865.com/s/JfMmjv-Kv2Zv',
+                forum: 'https://www.123865.com/s/JfMmjv-8v2Zv'
+            };
+            window.open(urls[type], '_blank');
+        }
+
+        // 初始化
+        window.onload = () => {
+            createStars();
+            document.querySelectorAll('.app-card').forEach(card => {
+                card.style.opacity = 0;
+                card.style.transform = 'translateY(50px)';
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                    card.style.opacity = 1;
+                    card.style.transform = 'translateY(0)';
+                }, 200);
+            });
+        };
+    </script>
+</body>
+</html>
